@@ -1,22 +1,30 @@
-import logo from './logo.svg';
+import { useState } from 'react';
 import './App.css';
+import useLocalStorage from './hooks/useLocalStorage';
 
 function App() {
+
+  const {localStorageData,setLocalStorageItem,getLocalStorageItem} = useLocalStorage();
+
+  const [key,setKey] = useState('');
+  const value = getLocalStorageItem(key)?getLocalStorageItem(key):''
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
+      <header className="App-header">        
         <p>
           Edit <code>src/App.js</code> and save to reload.
         </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        <code>{JSON.stringify(localStorageData)}</code>       
+
+        <label>
+          Key:
+          <input type="text" value={key} onChange={(e)=>{setKey(e.target.value)}} name='key'></input>
+        </label>
+        <label>
+          value:
+          <input type="text" value={value} name='value' onChange={(e)=>{setLocalStorageItem(key,e.target.value)}}></input>
+        </label>
       </header>
     </div>
   );
